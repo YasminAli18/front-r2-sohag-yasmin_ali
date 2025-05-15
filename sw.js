@@ -1,8 +1,8 @@
 self.addEventListener("install",(event)=>{
-    console.log("installed !!!!!");
+    console.log("installed ");
     self.skipWaiting()
     event.waitUntil(
-        caches.open("our-app").then((cache)=> cache.addAll(["/","index.html","styles/index.css","js/main.js","other.html","styles/other.css","js/other.js"]))
+        caches.open("our-cache").then((cache)=> cache.addAll(["/","index.html","styles/index.css","js/main.js"]))
     )
 })
 
@@ -15,7 +15,6 @@ self.addEventListener("activate",()=>{
 self.addEventListener("fetch",(event)=>{
     console.log("send req to ",event.request.url);
     event.respondWith(
-        // cache first
         caches.match(event.request.url).then((file)=>{
             if(file){
                 console.log("file found in cache");
